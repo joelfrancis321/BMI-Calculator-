@@ -1,41 +1,32 @@
 BMI Calculator 
 
 ## Project Overview
+This one came together during a Python Programming Internship at Oasis Infobyte. It’s a polished GUI app that lets you compute BMI, keep a health history, and spot trends over time. Security-conscious and built with solid practices.
 
-This project came out of a Python Programming Internship at Oasis Infobyte. It’s a GUI app that lets users compute their Body Mass Index (BMI) and follow their health journey with clear data visuals.
+What it does best
 
-## Key Features
+- Secure, clean GUI: A simple, distraction-free interface crafted with Tkinter on a plain white backdrop for easy focus.
+- Input protection: Uses regular expressions to keep the name field clean and safe from weird input.
+- Gentle pacing: A cooldown between calculations to avoid spamming and keep things stable.
+- Data keeping: Automatically saves Name, BMI, and Category to a persistent CSV file.
+- Visual trends: A “View Trends” button opens a Matplotlib line graph of BMI history.
 
-- User-Friendly GUI: A clean, modern windowed interface built with Tkinter.
+How it works
 
-- Automated Data Storage: Every calculation gets saved to a CSV so you can look back at past results.
+BMI formula: BMI = weight (kg) / (height (m))  
+Categories: Underweight, Normal, Overweight, or Obese, based on standard ranges.  
+Helpful error handling: Includes checks for centimeters vs. meters (like catching 175 when 1.75 was intended).
 
-- Trend Visualization: A “View Trends” option uses Matplotlib to show BMI history as a line graph.
+Getting it up and running
 
-- Smart Input Validation: Gentle error handling if something non-numeric or out of range is entered.
+Prereqs: Python plus a plotting library
 
-## How It Works
-
-1. Input: Users enter their Name, Weight (kg), and Height (m).
-
-2. Logic: The program uses the BMI formula.
-
-3. Classification: BMI falls into Underweight, Normal, Overweight, or Obese according to standard ranges.
-
-4. Storage & Graphics: Data is saved to bmi_data.csv, which the app reads to build the trend graph.
-
-## Installation & Usage
-
-1. Install Dependencies:
-```bash
 pip install matplotlib
-```
 
-2. Run the Application:
-```bash
-python bmi_gui.py
-```
+How to run
 
-#oasisinfobyte #internship #python #programming #datavisualization
+1. Download "bmi_gui.py"
+2) Open a terminal or your code editor (VS Code works fine)  
+3) Run: python bmi_gui.py
 
-
+#oasisinfobyte #internship #python #programming #cybersecurity #datavisualization
