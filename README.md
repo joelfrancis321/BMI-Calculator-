@@ -1,28 +1,41 @@
-# BMI-Calculator-
-BMI Calculator project for Python internship
-Oasis Infobyte: BMI Calculator Project
+BMI Calculator 
 
-Hey there! This is a first sneak peek into the Python Programming Internship at Oasis Infobyte, and this project is my starting point.
+## Project Overview
 
-Project at a glance
-A straightforward Command-Line BMI (Body Mass Index) calculator. It helps you quickly see which health bracket you fall into based on height and weight.
+This project came out of a Python Programming Internship at Oasis Infobyte. It’s a GUI app that lets users compute their Body Mass Index (BMI) and follow their health journey with clear data visuals.
 
-What makes it work
-- User-friendly prompts: Clear, simple guidance to steer you along.
-- Smooth input handling: It won’t crash if you toss in words or negative numbers—it's built to be forgiving.
-- Quick categorization: BMI is instantly mapped to Underweight, Normal, Overweight, or Obese.
-- Stay in flow: Keep calculating without having to restart.
+## Key Features
 
-How the math stacks up
-BMI = weight in kilograms divided by the square of height in meters.
+- User-Friendly GUI: A clean, modern windowed interface built with Tkinter.
 
-How to try it
-1. Make sure Python is installed on your computer.
-2. Grab the bmi_calculator.py file.
-3. Open a terminal or VS Code and run:
-   python bmi_calculator.py
+- Automated Data Storage: Every calculation gets saved to a CSV so you can look back at past results.
 
-Internship reflections
-Working on this project unlocked some Python basics—like while loops and try-except blocks for handling errors—and reinforced the importance of writing clear, human-friendly code.
+- Trend Visualization: A “View Trends” option uses Matplotlib to show BMI history as a line graph.
 
-#oasisinfobyte #internship #python #learning
+- Smart Input Validation: Gentle error handling if something non-numeric or out of range is entered.
+
+## How It Works
+
+1. Input: Users enter their Name, Weight (kg), and Height (m).
+
+2. Logic: The program uses the BMI formula.
+
+3. Classification: BMI falls into Underweight, Normal, Overweight, or Obese according to standard ranges.
+
+4. Storage & Graphics: Data is saved to bmi_data.csv, which the app reads to build the trend graph.
+
+## Installation & Usage
+
+1. Install Dependencies:
+```bash
+pip install matplotlib
+```
+
+2. Run the Application:
+```bash
+python bmi_gui.py
+```
+
+#oasisinfobyte #internship #python #programming #datavisualization
+
+
