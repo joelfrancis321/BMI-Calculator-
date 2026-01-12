@@ -22,15 +22,16 @@ What it does best
 
 ### **1. Technical Stack**
 
-Language: Python 3.x 
+> *Language: Python 3.x 
 
-GUI Library: Tkinter (for the graphical interface) 
+> *GUI Library: Tkinter (for the graphical interface) 
  
-Data Visualization: Matplotlib (for trend analysis and graphs)
+> *Data Visualization: Matplotlib (for trend analysis and graphs)
   
-Data Storage: CSV (Comma Separated Values) for persistent historical records 
+> *Data Storage: CSV (Comma Separated Values) for persistent historical records 
 
-Security: Regular Expressions (Regex) for input sanitization and `time` module for rate limiting
+> *Security: Regular Expressions (Regex) for input sanitization and `time` module for rate limiting
+
 
 
 
