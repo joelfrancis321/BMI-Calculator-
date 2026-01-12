@@ -19,6 +19,21 @@ What it does best
 > * **Rate Limiting:** Features a built-in cooldown to prevent excessive calculations in a short period, ensuring a stable user experience.
 
 
+
+### **1. Technical Stack**
+
+Language: Python 3.x 
+
+GUI Library: Tkinter (for the graphical interface) 
+ 
+Data Visualization: Matplotlib (for trend analysis and graphs)
+  
+Data Storage: CSV (Comma Separated Values) for persistent historical records 
+
+Security: Regular Expressions (Regex) for input sanitization and `time` module for rate limiting
+
+
+
 How to run
 
 1. Download "bmi_gui.py"
