@@ -11,17 +11,13 @@ What it does best
 - Data keeping: Automatically saves Name, BMI, and Category to a persistent CSV file.
 - Visual trends: A “View Trends” button opens a Matplotlib line graph of BMI history.
 
-How it works
+ ### **How it Works**
 
-BMI formula: BMI = weight (kg) / (height (m))  
-Categories: Underweight, Normal, Overweight, or Obese, based on standard ranges.  
-Helpful error handling: Includes checks for centimeters vs. meters (like catching 175 when 1.75 was intended).
+> * **Accurate Logic:** Implements the standard BMI formula where weight is divided by height squared.
+> * **Smart Validation:** Includes logic to catch common user errors, such as entering height in centimeters instead of meters.
+> * **Secure Input:** Employs **Input Sanitization** to filter out special characters in the name field, protecting the application from unintended behavior.
+> * **Rate Limiting:** Features a built-in cooldown to prevent excessive calculations in a short period, ensuring a stable user experience.
 
-Getting it up and running
-
-Prereqs: Python plus a plotting library
-
-pip install matplotlib
 
 How to run
 
