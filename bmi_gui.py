@@ -2,7 +2,13 @@ import tkinter as tk
 from tkinter import messagebox
 import csv
 import os
-import matplotlib.pyplot as plt # Requires: pip install matplotlib
+import time
+import re
+import matplotlib.pyplot as plt
+
+# --- SECURITY: RATE LIMITING ---
+last_execution_time = 0
+COOLDOWN_SECONDS = 2 
 
 # --- DATA STORAGE ---
 def save_data(name, bmi, category):
@@ -13,7 +19,7 @@ def save_data(name, bmi, category):
             writer.writerow(['Name', 'BMI', 'Category'])
         writer.writerow([name, f"{bmi:.2f}", category])
 
-# --- VISUALIZATION (Advanced Requirement) ---
+# --- VISUALIZATION: TREND ANALYSIS ---
 def show_trends():
     bmis = []
     try:
@@ -27,52 +33,68 @@ def show_trends():
         plt.title('Your BMI Trend Over Time')
         plt.ylabel('BMI Value')
         plt.grid(True)
-        plt.show() # This visualizes the result [cite: 60, 68]
+        plt.show() # Fulfills visualization requirement [cite: 60, 68]
     except FileNotFoundError:
         messagebox.showwarning("No Data", "Please save some results first!")
 
-# --- LOGIC ---
+# --- LOGIC: SECURE CALCULATION ---
 def calculate_bmi():
+    global last_execution_time
+    current_time = time.time()
+    
+    # Rate Limiting
+    if current_time - last_execution_time < COOLDOWN_SECONDS:
+        messagebox.showwarning("Rate Limit", "Please wait between calculations.")
+        return
+    
     try:
-        name = entry_name.get()
+        # Input Sanitization
+        name = entry_name.get().strip()
+        if not re.match("^[a-zA-Z ]*$", name) or not name:
+            messagebox.showerror("Input Error", "Invalid name format.")
+            return
+
         w = float(entry_weight.get())
         h = float(entry_height.get())
         
-        if h > 3: # Simple check to catch cm vs meters errors
+        if h > 3: # Catching meter vs cm errors [cite: 63]
             messagebox.showwarning("Height Error", "Please enter height in meters (e.g., 1.75)")
             return
 
         bmi = w / (h ** 2)
+        last_execution_time = current_time 
+        
         if bmi < 18.5: cat = "Underweight"
         elif 18.5 <= bmi < 24.9: cat = "Normal weight"
         elif 25 <= bmi < 29.9: cat = "Overweight"
         else: cat = "Obese"
             
-        save_data(name, bmi, cat)
+        save_data(name, bmi, cat) # Data storage [cite: 61, 67]
         messagebox.showinfo("Result", f"BMI: {bmi:.2f}\nCategory: {cat}")
         
     except ValueError:
-        messagebox.showerror("Error", "Please enter valid numbers.")
+        messagebox.showerror("Error", "Please enter valid numeric values.")
 
-# --- GUI DESIGN (Advanced Requirement) ---
+# --- CLEAN GUI DESIGN ---
 root = tk.Tk()
 root.title("Advanced BMI Analysis")
 root.geometry("400x500")
+root.configure(bg='white') # Plain background
 
-# Bold Headings for your GUI [cite: 66]
-tk.Label(root, text="User Name:", font=("Arial", 10, "bold")).pack(pady=5)
-entry_name = tk.Entry(root)
+# Bold Headings [cite: 66, 70]
+tk.Label(root, text="USER NAME", bg='white', font=("Arial", 10, "bold")).pack(pady=(20,5))
+entry_name = tk.Entry(root, bd=1, relief="solid")
 entry_name.pack()
 
-tk.Label(root, text="Weight (kg):", font=("Arial", 10, "bold")).pack(pady=5)
-entry_weight = tk.Entry(root)
+tk.Label(root, text="WEIGHT (KG)", bg='white', font=("Arial", 10, "bold")).pack(pady=5)
+entry_weight = tk.Entry(root, bd=1, relief="solid")
 entry_weight.pack()
 
-tk.Label(root, text="Height (meters):", font=("Arial", 10, "bold")).pack(pady=5)
-entry_height = tk.Entry(root)
+tk.Label(root, text="HEIGHT (METERS)", bg='white', font=("Arial", 10, "bold")).pack(pady=5)
+entry_height = tk.Entry(root, bd=1, relief="solid")
 entry_height.pack()
 
-tk.Button(root, text="Calculate & Save", command=calculate_bmi, bg="green", fg="white").pack(pady=20)
-tk.Button(root, text="View BMI Trend Graph", command=show_trends, bg="blue", fg="white").pack()
+tk.Button(root, text="CALCULATE & SAVE", command=calculate_bmi, bg="#2c3e50", fg="white").pack(pady=20)
+tk.Button(root, text="VIEW TREND GRAPH", command=show_trends, bg="#2980b9", fg="white").pack()
 
 root.mainloop()
