@@ -2,12 +2,18 @@ import tkinter as tk
 from tkinter import messagebox
 import csv
 import os
+import sys
 import time
 import re
 import matplotlib.pyplot as plt
 import math
 
 # --- CONFIGURATION & ASSETS ---
+# Ensure we are working in the script's directory
+script_dir = os.path.dirname(os.path.abspath(__file__))
+DATA_FILE = os.path.join(script_dir, 'bmi_data.csv')
+print(f"Final Database Path: {DATA_FILE}")
+
 THEME = {
     "bg": "#0b0d0f",          # Pitch Black
     "card_bg": "#14171a",     # Dark Charcoal (Glass-like)
@@ -123,20 +129,23 @@ class StatusRing(tk.Canvas):
 # --- APP LOGIC ---
 
 last_execution_time = 0
-COOLDOWN_SECONDS = 1
+COOLDOWN_SECONDS = 2
 
 def save_data(name, bmi, category):
-    file_exists = os.path.isfile('bmi_data.csv')
-    with open('bmi_data.csv', mode='a', newline='') as file:
-        writer = csv.writer(file)
-        if not file_exists:
-            writer.writerow(['Name', 'BMI', 'Category'])
-        writer.writerow([name, f"{bmi:.2f}", category])
+    try:
+        file_exists = os.path.isfile(DATA_FILE)
+        with open(DATA_FILE, mode='a', newline='') as file:
+            writer = csv.writer(file)
+            if not file_exists:
+                writer.writerow(['Name', 'BMI', 'Category'])
+            writer.writerow([name, f"{bmi:.2f}", category])
+    except PermissionError:
+        messagebox.showerror("Database Error", "Please close the CSV file if it is open in another program")
 
 def show_trends():
     bmis = []
     try:
-        with open('bmi_data.csv', mode='r') as file:
+        with open(DATA_FILE, mode='r') as file:
             reader = csv.DictReader(file)
             for row in reader:
                 bmis.append(float(row['BMI']))
@@ -185,10 +194,14 @@ def calculate_bmi():
         h_val = entry_height.get()
         
         if not w_val or not h_val:
-            return
+            raise ValueError
 
         w = float(w_val)
         h = float(h_val)
+        
+        if w <= 0 or h <= 0:
+            messagebox.showwarning("Arithmetic Error", "Values must be greater than zero")
+            return
         
         if h > 3:
             messagebox.showwarning("Logic Error", "Height is in meters (should be < 3.0).")
@@ -216,7 +229,7 @@ def calculate_bmi():
         lbl_msg.config(text=f"Analysis complete for {name}")
         
     except ValueError:
-        messagebox.showerror("Error", "Please enter valid numeric values.")
+        messagebox.showerror("Input Format Error", "Please enter numeric values only (e.g., 70, 1.75)")
 
 # --- MAIN WINDOW SETUP ---
 root = tk.Tk()
@@ -282,7 +295,7 @@ lbl_cat = tk.Label(res_frame, text="READY", bg=THEME["bg"], fg=THEME["text_muted
                    font=(THEME["font_main"], 12, "bold"))
 lbl_cat.pack(pady=5)
 
-lbl_msg = tk.Label(res_frame, text="Enter biometric data to begin", bg=THEME["bg"], fg="#444", 
+lbl_msg = tk.Label(res_frame, text="Enter health metrics to begin", bg=THEME["bg"], fg="#444", 
                    font=(THEME["font_main"], 8))
 lbl_msg.pack()
 
